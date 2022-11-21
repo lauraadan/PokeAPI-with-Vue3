@@ -1,8 +1,6 @@
-<!-- COMPONENTE QUE CREA UN EFECTO DE LOADING MIENTRAS SE CARGAN LOS DATOS Y SE MUESTRAN EN PANTALLA -->
 <template>
     <div class="loading">
         <figure class="image is-64x64">
-            <!-- IMAGEN Y TEXTO QUE SE MUESTRAN CUANDO HACE LOADING -->
             <img src="https://www.freeiconspng.com/thumbs/pokeball-png/pokemon-ball-png-1.png">
         </figure>
         Loading
@@ -23,14 +21,10 @@
     text-shadow: 1px 1px 2px white;
 }
 
-/* Animacion del loading, la img gira de forma infinita.  */
 img {
     animation: loading-spin infinite 1s linear;
 }
 
-/* keyframes creamos una animacion
-loading-spin es el nombre que le damos
-*/
 @keyframes loading-spin {
     0% {
         transform: rotate(0deg);

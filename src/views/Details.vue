@@ -1,23 +1,12 @@
-<!-- EN ESTE COMPONENTE SE MOSTRARÁ LA INFORMACION DE LOS DETALLES DE CADA POKEMON -->
-
 <template>
     <div class="container">
-        <!-- Si isLoading esta en true, entonces que aplique el componente loading. Si esta en false (else mas abajo), muestra la info 
-        de details en el container details-->
         <div class="details" v-if="isLoading">
             <Loading />
         </div>
 
         <div v-else class="details">
-            <!-- Container que almacena la informacion del pokemon anterior, actual y siguiente en la parte superior de la card-->
             <div class="details-title">
-
-                <!-- INFORMACION DEL POKEMON ANTERIOR EN EL CASO DE QUE LA ID NO SEA IGUAL A 1 -->
-                <!-- Condicion que indica que si la id del pokemon es igual a 1, no muestre nada.
-                Si no es igual a 1 (else) que muestre en la izquierda la id del pokemon anterior (-1) y la imagen del pokemon anterior
-                Tambien le añadimos una flecha -->
                 <div v-if="pokemon.id == 1"></div>
-                <!-- Añadimos router link porque es un enlace a, en este caso, al pokemon anterior -->
                 <router-link class="nav-pokemon" v-else :to="{name:'details', params:{id:pokemon.id - 1}}">
                     <i class="fa-solid fa-arrow-left"></i>
                     <figure class="image is-64x64">
@@ -25,14 +14,8 @@
                     </figure>
                 </router-link>
 
-                <!-- INFORMACION DEL POKEMON ACTUAL -->
                 <h1>#{{pokemon.id}} {{pokemon.name}}</h1>
-
-                <!--INFORMACION DEL POKEMON SIGUIENTE EN CASO DE QUE LA ID NO SEA 251 (LIMITE DE POKEMONS) -->
-                <!-- Si la id del pokemon ES igual a la id limite que tiene que mostrar (251) entonces que no haga nada,
-                si no es igual a 251, entonces que muestre la informacion del siguiente id con su imagen y una flecha hacia la derecha. -->
                 <div v-if="pokemon.id == limitPokemons"></div>
-                 <!-- Añadimos router link porque es un enlace a, en este caso, al pokemon siguiente -->
                 <router-link v-else class="nav-pokemon" :to="{name:'details', params:{id:pokemon.id + 1}}">
                     <figure class="image is-64x64">
                         <img :src="getPokemonImage(pokemon.id + 1)" alt="">
@@ -41,11 +24,9 @@
                 </router-link>
             </div>
 
-            <!-- DETALLES DEL POKEMON ACTUAL -->
             <div class="details-data">
                 <div class="columns">
                     <div class="column is-6">
-                        <!-- Informacion obtenida del componente POKEMONPROFILE -->
                         <PokemonProfile :pokemon="pokemon" />
                     </div>
                     <div class="column is-6">
@@ -83,19 +64,14 @@ import PokemonProfile from '../components/PokemonProfile.vue';
 import Sprites from '../components/Sprites.vue';
 import Stats from '../components/Stats.vue';
 
-// route nos da la informacion de la ruta
+
 const route = useRoute();
-//router nos permite usar el router
 const router = useRouter();
 const isLoading = ref(true);
 const pokemon = ref(undefined);
 const color = ref();
 
-// Observa una variable, en esta caso el route.params.id y cuando cambia ejecuta una funcion
-// lo usaremos cuando tengamos una url con parametros y cambie el valor para actualizar los datos
 watch(() => route.params.id, newValue => {
-    console.log('la url ha cambiado')
-    // isLoading.value = true;
     loadDetails()
 })
 
@@ -107,7 +83,6 @@ const loadDetails = async () => {
 
 onMounted(async () => {
     if (route.params.id > limitPokemons) {
-        // con push cambiamos la ruta y la web navega al name que le digamos
         router.push({ name: 'home' })
     }
     loadDetails()
@@ -140,7 +115,6 @@ onMounted(async () => {
     font-size: 1.5rem;
     text-transform: capitalize;
     text-align: center;
-    /* v-bind vincula una propiedad del style a una variable del script */
     background-color: v-bind(color);
 }
 
